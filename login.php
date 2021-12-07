@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 if (empty($_POST)) {
     header('Location: /');
     exit();
@@ -33,9 +35,11 @@ foreach($users as $user) {
 }
 
 if (empty($logged_in_user)) {
-    throw new Error('Unauthorized');
+    $error_message = 'Wrong username or password; Please try again!';
+    include 'error.php';
+    exit();
 }
 
-echo 'Hello '.$logged_in_user['username'];
-
-
+$_SESSION['user'] = $logged_in_user;
+header('Location: /');
+exit();
