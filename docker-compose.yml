@@ -1,8 +1,28 @@
 version: "3.9"
 services:
   web:
-    image: php:apache
+    build: .
     ports:
       - "3000:80"
     volumes:
       - $PWD:/var/www/html/
+    links:
+      - db
+    depends_on:
+        - db
+
+  db:
+    image: mariadb:10.4.20
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=login
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+    ports:
+      - "33066:3306"
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  db:

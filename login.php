@@ -7,32 +7,9 @@ if (empty($_POST)) {
     exit();
 }
 
-$users = [];
+$pdo = include_once "mysql.php";
 
-$handle = fopen("users.csv", "r");
-$row_count = 0;
-while (($user = fgetcsv($handle)) !== FALSE) {
-    $row_count++;
-
-    if($row_count === 1) {
-        continue;
-    }
-
-    $users[] = [
-        'username' => $user[0],
-        'password' => $user[1],
-    ];
-}
-
-$logged_in_user = false;
-foreach($users as $user) {
-
-    if ($_POST['username'] === $user['username'] && $_POST['password'] === $user['password']){
-        $logged_in_user = $user;
-        break;
-    }
-
-}
+$logged_in_user = $pdo->query("SELECT * FROM users ORDER BY id DESC LIMIT 1")->fetch();
 
 if (empty($logged_in_user)) {
     $error_message = 'Wrong username or password; Please try again!';
