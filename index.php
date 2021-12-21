@@ -17,5 +17,6 @@
             <input type="password" name="password" placeholder="Parool"><br>
             <button>Logi sisse</button>
         </form>
+        <p><a href="/register.php">Registreeru</a></p>
     </body>
 </html>
