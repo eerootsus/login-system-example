@@ -10,7 +10,9 @@ if (empty($_POST)) {
 
 $pdo = include_once "mysql.php";
 
-$logged_in_user = $pdo->query("SELECT * FROM users ORDER BY id DESC LIMIT 1")->fetch();
+$logged_in_user = $pdo->prepare("SELECT * FROM users WHERE username = ?");
+$logged_in_user->execute([$_POST['username']]);
+$logged_in_user = $logged_in_user->fetch(PDO::FETCH_ASSOC);
 
 if (empty($logged_in_user)) {
     $error_message = 'Vale kasutajanimi või parool. Proovi uuesti.';

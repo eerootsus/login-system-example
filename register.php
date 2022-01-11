@@ -14,16 +14,23 @@
         }
 
         $pdo = include_once "mysql.php";
+
+        $user_check = $pdo->prepare("SELECT id FROM users WHERE username = ?");
+        $user_check->execute([$_POST['username']]);
+
+        if ($user_check->fetch() !== false) {
+            $error_message = 'Selline kasutaja on juba olemas. Vali uus kasutajanimi.';
+            include 'error.php';
+            exit();
+        }
+
         $sth = $pdo->prepare("INSERT INTO users (username, password) values (?, ?)");
         $created_user = $sth->execute([
                 $_POST['username'],
                 password_hash($_POST['password'], PASSWORD_DEFAULT)
         ]);
 
-        var_dump($created_user);
-
-
-
+        header('Location: /');
         exit();
     }
 ?>
