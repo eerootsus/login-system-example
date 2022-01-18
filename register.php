@@ -13,6 +13,8 @@
             exit();
         }
 
+        $_POST['username'] = htmlspecialchars($_POST['username']);
+
         $pdo = include_once "mysql.php";
 
         $user_check = $pdo->prepare("SELECT id FROM users WHERE username = ?");

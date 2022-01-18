@@ -1,16 +1,16 @@
 <?php
-$pdo = null;
-$servername = "db";
-$username = "user";
-$password = "password";
+$_pdo = null;
+$_servername = "db";
+$_username = "user";
+$_password = "password";
 
 try {
-    $pdo = new PDO("mysql:host=$servername;dbname=login", $username, $password);
+    $_pdo = new PDO("mysql:host=$_servername;dbname=login", $_username, $_password);
     // set the PDO error mode to exception
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch(PDOException $e) {
     echo "Database connection failed: " . $e->getMessage();
     die();
 }
 
-return $pdo;
+return $_pdo;
